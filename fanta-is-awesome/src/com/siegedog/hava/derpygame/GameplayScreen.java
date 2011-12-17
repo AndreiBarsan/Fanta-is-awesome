@@ -75,7 +75,7 @@ public class GameplayScreen implements Screen {
 
 		map = new TileMap("level", PIXELS_PER_METER);
 		map.loadCollisions("data/tiledmap/collisions.txt", world);
-		boxDebugRenderer = new Box2DDebugRenderer();
+		boxDebugRenderer = new Box2DDebugRenderer(true, true, true);
 
 		// So far, just a thingy to let us drag the world around
 		gameInput = new GameInput(game, this);
@@ -92,7 +92,7 @@ public class GameplayScreen implements Screen {
 		// dude = new Dude(sprite, this);
 
 		for(float cx = 7; cx < 30; cx+=2)
-			root.addNode(new Crate(cx, 14, 20, 20));
+			root.addNode(new Crate(cx, 14, 30, 50));
 		
 		dude1 = new Unit("DERPY");
 

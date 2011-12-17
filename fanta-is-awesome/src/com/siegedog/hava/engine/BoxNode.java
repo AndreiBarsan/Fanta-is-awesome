@@ -26,21 +26,6 @@ public class BoxNode extends Node {
 	protected World world;
 	
 	protected Fixture bodyFixture;
-
-	/*public BoxNode(World world, float x, float y, float w, float h) {
-		this(world, def, fix);
-		
-
-	
-		
-		body = world.createBody(def);
-
-		p
-		bodyFixture = body.createFixture(fDef);
-		
-		body.setLinearVelocity(new Vector2(0, 0));
-		body.setLinearDamping(1.0f);
-	}*/
 	
 	public BoxNode(BodyDef bDef, FixtureDef fDef) {
 		super("B2DNode");

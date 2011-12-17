@@ -16,7 +16,7 @@ public class Crate extends Node {
 		super("crate");
 		
 		FixtureDef fd = new FixtureDef();
-		fd.density = 40f;
+		fd.density = 60f;
 		fd.friction = 0.2f;
 		
 		PolygonShape shape = new PolygonShape();
