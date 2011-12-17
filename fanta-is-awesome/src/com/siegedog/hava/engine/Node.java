@@ -10,7 +10,7 @@ import java.util.Queue;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Node {
-	protected LinkedList<Node> children = new LinkedList<Node>();
+	protected ArrayList<Node> children = new ArrayList<Node>();
 	protected Node parent;
 
 	// LinkedList<Message> messages = new LinkedList<Message>();
