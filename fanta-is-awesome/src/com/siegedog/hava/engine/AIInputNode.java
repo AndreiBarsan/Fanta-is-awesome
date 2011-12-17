@@ -33,4 +33,14 @@ public class AIInputNode extends InputNode
 	{
 		return ai.calculateAttack();
 	}
+	
+	public AIInputNode()
+	{
+		
+	}
+	
+	public AIInputNode(IAIController ctrl)
+	{
+		ai = ctrl;
+	}
 }

@@ -17,9 +17,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.siegedog.hava.engine.AIInputNode;
 import com.siegedog.hava.engine.FancyGame;
 import com.siegedog.hava.engine.GameCam2D;
 import com.siegedog.hava.engine.GameInput;
+import com.siegedog.hava.engine.InputNode;
+import com.siegedog.hava.engine.LulzyAINode;
 import com.siegedog.hava.engine.Node;
 import com.siegedog.hava.engine.Resources;
 import com.siegedog.hava.engine.SaveGameHelper;
@@ -93,7 +96,8 @@ public class GameplayScreen implements Screen {
 		// for(float cx = 7; cx < 30; cx+=2)
 			//root.addNode(new Crate(cx, 14, 30, 50));
 		
-		dude1 = new Unit("DERPY");
+		InputNode inputCtrl = new AIInputNode(new LulzyAINode());
+		dude1 = new Unit("DERPY", inputCtrl);
 
 		cam.follow(dude1.getPhysics(), true);
 
