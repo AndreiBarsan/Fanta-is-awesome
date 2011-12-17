@@ -25,7 +25,6 @@ import com.siegedog.hava.engine.Resources;
 import com.siegedog.hava.engine.SaveGameHelper;
 import com.siegedog.hava.engine.TileMap;
 import com.siegedog.hava.engine.Unit;
-import com.siegedog.hava.engine.test.LolGun;
 
 public class GameplayScreen implements Screen {
 
@@ -53,7 +52,7 @@ public class GameplayScreen implements Screen {
 	Vector3 tmp = new Vector3();
 
 	TileMap map;
-	float gravityStrength = 80f;
+	float gravityStrength = 98f;
 
 	World world;
 	Box2DDebugRenderer boxDebugRenderer;
@@ -98,7 +97,6 @@ public class GameplayScreen implements Screen {
 
 		cam.follow(dude1.getPhysics(), true);
 
-		dude1.equip(new LolGun());
 		// dude1.attack(dude2);
 		// dude2.attack(dude1);
 		// dude1.attack(dude2);

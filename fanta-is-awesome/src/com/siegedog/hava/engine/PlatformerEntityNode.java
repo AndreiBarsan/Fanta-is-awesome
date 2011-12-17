@@ -50,7 +50,7 @@ public class PlatformerEntityNode extends BoxNode {
 	public PlatformerEntityNode(float x, float y, float w, float h) {
 		super(null, null);
 		
-		addNode(inputNode = new InputNode());
+		addNode(inputNode = new KeyboardInputNode());
 		setPosition(x, y);
 		setDimensions(w, h);
 		body.setLinearDamping(0f);
