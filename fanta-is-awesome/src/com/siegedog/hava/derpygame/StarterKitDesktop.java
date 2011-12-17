@@ -13,3 +13,6 @@ public class StarterKitDesktop {
 		new JoglApplication(new StarterKit(), "DERP", 640, 480, false);		
 	}
 }
+
+
+// WHAT IF..?
