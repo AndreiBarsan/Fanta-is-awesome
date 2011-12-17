@@ -1,5 +1,7 @@
 package com.siegedog.hava.derpygame;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -8,9 +10,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -21,6 +25,7 @@ import com.siegedog.hava.engine.FancyGame;
 import com.siegedog.hava.engine.GameCam2D;
 import com.siegedog.hava.engine.GameInput;
 import com.siegedog.hava.engine.Node;
+import com.siegedog.hava.engine.RenderNode2D;
 import com.siegedog.hava.engine.Resources;
 import com.siegedog.hava.engine.SaveGameHelper;
 import com.siegedog.hava.engine.TileMap;
@@ -79,6 +84,12 @@ public class GameplayScreen implements Screen {
 		// So far, just a thingy to let us drag the world around
 		gameInput = new GameInput(game, this);
 		Gdx.input.setInputProcessor(gameInput);
+		
+		RenderNode2D aniTest = new RenderNode2D("data/img/sprites/swarmer.png", 64, 64);
+		aniTest.addAnimationByFrameCount("idle", 6);
+		aniTest.play("idle");
+		aniTest.getSprite().setPosition(80 * PIXELS_PER_METER, 28 * PIXELS_PER_METER);
+		root.addNode(aniTest);
 
 		//BasicSaveData save = new SaveGameHelper<BasicSaveData>().readSaveData("save.sav");
 		//System.out.println("Loaded game...");
