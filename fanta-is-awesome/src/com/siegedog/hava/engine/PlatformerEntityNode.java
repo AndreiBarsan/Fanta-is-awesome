@@ -21,32 +21,31 @@ import com.badlogic.gdx.scenes.scene2d.Interpolator;
 
 public class PlatformerEntityNode extends BoxNode {
 
-	protected boolean touchWall;
-	ContactListener listener;
-
+	protected Fixture footSensor;
 	InputNode inputNode;
 
+	boolean jumped = false;
+
+	float jumpEndStrength = 30f;
+
+	float jumpStartStrength = 100f;
+	protected float jumpTimeLeft = 0f;
+
+	protected float jumpTimeTotal = 0.080f;
 	private float lastGroundTime = System.nanoTime();
 
+	ContactListener listener;
+
+	protected float maxHspeed = 20f;
 	int numFootContacts = 0;
-	protected Fixture footSensor;
 
-	protected float jumpTimeLeft = 0f;
-	protected float jumpTimeTotal = 0.080f;
-
-	protected float airFriction = 0f;
-	protected float groundFriction = 0f;
-
+	float pFriction = 0.5f;
 	protected float sideMoveStrength = 3f;
-	protected float maxHspeed = 30f;
+	boolean touchFloor;
 
-	float jumpEndStrength = 25f;
-	float jumpStartStrength = 120f;
+	protected boolean touchWall;
+
 	float w, h;
-
-	public float getMaxHspeed() {
-		return maxHspeed;
-	}
 
 	public PlatformerEntityNode(float x, float y, float w, float h) {
 		super(null, null);
@@ -55,6 +54,7 @@ public class PlatformerEntityNode extends BoxNode {
 		setPosition(x, y);
 		setDimensions(w, h);
 		body.setLinearDamping(0f);
+		bodyFixture.setFriction(0f);
 		body.setGravityScale(1.2f);
 		this.w = w;
 		this.h = h;
@@ -67,12 +67,10 @@ public class PlatformerEntityNode extends BoxNode {
 		world.setContactListener(listener = new ContactListener() {
 
 			@Override
-			public void preSolve(Contact contact, Manifold oldManifold) {
-			}
-
-			@Override
-			public void postSolve(Contact contact, ContactImpulse impulse) {
-
+			public void beginContact(Contact contact) {
+				if (contact.getFixtureA() == footSensor
+						|| contact.getFixtureB() == footSensor)
+					numFootContacts++;
 			}
 
 			@Override
@@ -83,17 +81,37 @@ public class PlatformerEntityNode extends BoxNode {
 			}
 
 			@Override
-			public void beginContact(Contact contact) {
-				if (contact.getFixtureA() == footSensor
-						|| contact.getFixtureB() == footSensor)
-					numFootContacts++;
+			public void postSolve(Contact contact, ContactImpulse impulse) {
+
+			}
+
+			@Override
+			public void preSolve(Contact contact, Manifold oldManifold) {
 			}
 		});
 
 	}
 
-	boolean jumped = false;
 
+	public float getMaxHspeed() {
+		return maxHspeed;
+	}
+	
+
+	public String getUI() {
+		
+		return ((touchWall) ? "[tw]" : "")
+				+ ((numFootContacts == 0) ? " [in air]" : ("[ground "
+						+ numFootContacts + "]")) + "["
+				+ (bodyFixture.getFriction()) + "] " + (body.getLinearVelocity().x * 10 / 10);
+	}
+
+	protected void handleInput(float delta) {
+		move(inputNode.getMovement());
+
+		if (inputNode.getJump())
+			jump();
+	}
 
 	protected void jump() {
 		// TODO: apply vertical momentum if
@@ -114,8 +132,7 @@ public class PlatformerEntityNode extends BoxNode {
 
 		}
 	}
-	
-	float pFriction = 0.5f;
+
 	protected void move(Vector2 impulse) {
 
 		//Vector2 center = new Vector2(body.getLocalCenter());
@@ -136,7 +153,7 @@ public class PlatformerEntityNode extends BoxNode {
 				result += (maxHspeed - Math.abs(hspeed));
 			
 		} else {
-			float pFriction = 4f;
+			// float pFriction = 4f;
 		}
 		
 		
@@ -149,78 +166,9 @@ public class PlatformerEntityNode extends BoxNode {
 	
 	}
 
-	protected void handleInput(float delta) {
-		move(inputNode.getMovement());
-
-		if (inputNode.getJump())
-			jump();
-	}
-
 	protected void respawn() {
 		body.setTransform(new Vector2(20, 60), 0);
 		body.setLinearVelocity(0.0f, 0.0f);
-	}
-
-	@Override
-	public void update(float delta) {
-		// Set various flags based on the input node
-		if(bodyFixture.getFriction() > 140 && Math.abs(body.getLinearVelocity().x) > 0.2f && numFootContacts > 0){
-			
-			System.out.println("DERP");
-		}
-		
-		handleInput(delta);
-
-		touchFloor = touchesFloor();
-		if (!touchFloor) {
-			// in the air
-			bodyFixture.setFriction(airFriction);
-
-			if (!jumped)
-				jumpTimeLeft = 0f;
-		} else {
-			// on the ground
-			bodyFixture.setFriction(groundFriction);
-			jumpTimeLeft = jumpTimeTotal;
-		}
-		jumped = false;
-		
-		if (body.getPosition().y < 0) {
-			respawn();
-		}
-
-		touchWall = touchesWall();
-
-		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
-			respawn();
-		}
-	}
-
-	boolean touchFloor;
-
-	public String getUI() {
-		// if(numFootContacts==0 &&
-		
-		return ((touchWall) ? "[tw]" : "")
-				+ ((numFootContacts == 0) ? " [in air]" : ("[ground "
-						+ numFootContacts + "]")) + "["
-				+ (bodyFixture.getFriction()) + "] " + (body.getLinearVelocity().x * 10 / 10);
-	}
-
-	protected boolean touchesWall() {
-
-		if (world.getContactCount() == 0)
-			return false;
-
-		List<Contact> contacts = world.getContactList();
-		for (Contact c : contacts) {
-			if (c.getFixtureA() == bodyFixture
-					|| c.getFixtureB() == bodyFixture) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	protected boolean touchesFloor() {
@@ -242,6 +190,57 @@ public class PlatformerEntityNode extends BoxNode {
 		 * 
 		 * return false;
 		 */
+	}
+
+	protected boolean touchesWall() {
+
+		if (world.getContactCount() == 0)
+			return false;
+
+		List<Contact> contacts = world.getContactList();
+		for (Contact c : contacts) {
+			if (c.getFixtureA() == bodyFixture
+					|| c.getFixtureB() == bodyFixture) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public void update(float delta) {
+		// Set various flags based on the input node
+		if(bodyFixture.getFriction() > 140 && Math.abs(body.getLinearVelocity().x) > 0.2f && numFootContacts > 0){
+			
+			System.out.println("DERP");
+		}
+		
+		handleInput(delta);
+
+		touchFloor = touchesFloor();
+		if (!touchFloor) {
+			// in the air
+			//bodyFixture.setFriction(airFriction);
+
+			if (!jumped)
+				jumpTimeLeft = 0f;
+		} else {
+			// on the ground
+			// bodyFixture.setFriction(groundFriction);
+			jumpTimeLeft = jumpTimeTotal;
+		}
+		jumped = false;
+		
+		if (body.getPosition().y < 0) {
+			respawn();
+		}
+
+		touchWall = touchesWall();
+
+		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
+			respawn();
+		}
 	}
 
 }

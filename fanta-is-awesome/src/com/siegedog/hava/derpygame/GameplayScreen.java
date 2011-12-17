@@ -81,9 +81,9 @@ public class GameplayScreen implements Screen {
 		gameInput = new GameInput(game, this);
 		Gdx.input.setInputProcessor(gameInput);
 
-		BasicSaveData save = new SaveGameHelper<BasicSaveData>().readSaveData("save.sav");
-		System.out.println("Loaded game...");
-		System.out.println(save.name);
+		//BasicSaveData save = new SaveGameHelper<BasicSaveData>().readSaveData("save.sav");
+		//System.out.println("Loaded game...");
+		//System.out.println(save.name);
 		
 		Resources.loadSfx("data/sound/sfx/");
 
@@ -91,8 +91,8 @@ public class GameplayScreen implements Screen {
 		TS = new Sprite(new Texture("data/img/sprites/attractor.png"));
 		// dude = new Dude(sprite, this);
 
-		for(float cx = 7; cx < 30; cx+=2)
-			root.addNode(new Crate(cx, 14, 30, 50));
+		// for(float cx = 7; cx < 30; cx+=2)
+			//root.addNode(new Crate(cx, 14, 30, 50));
 		
 		dude1 = new Unit("DERPY");
 

@@ -30,12 +30,9 @@ import com.siegedog.hava.engine.FancyGame;
 public class StarterKit extends FancyGame {
 
 	@Override
-	public void create () {
-		// Ok, the game started. Load menu and shit here.		
+	public void create() {
+		// Ok, the game started. Load menu and shit here.
 		pushScreen(new GameplayScreen(this));
 	}
-	
-	
-	
 
 }
