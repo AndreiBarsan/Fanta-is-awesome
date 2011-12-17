@@ -109,65 +109,6 @@ public class PlatformerEntityNode extends BoxNode {
 				+ (bodyFixture.getFriction()) + "] " + (body.getLinearVelocity().x * 10 / 10);
 	}
 
-	protected void handleInput(float delta) {
-		move(inputNode.getMovement());
-
-		if (inputNode.getJump())
-			jump();
-	}
-
-	protected void jump() {
-		// TODO: apply vertical momentum if
-		// certain conditions are met
-		// - on ground or in water OR multi-jump available
-		float delta = Gdx.graphics.getDeltaTime();
-		jumped = true;
-
-		if (jumpTimeLeft > 0) {
-			jumpTimeLeft -= delta;
-			Vector2 pos = body.getPosition();
-			float vi = MU.lerp(jumpEndStrength, jumpStartStrength, jumpTimeLeft
-					/ jumpTimeTotal);
-
-			body.applyLinearImpulse(new Vector2(0, vi), body.getLocalCenter());
-
-			// Resources.play("Powerup21");
-
-		}
-	}
-
-	protected void move(Vector2 impulse) {
-
-		//Vector2 center = new Vector2(body.getLocalCenter());
-		float hspeed = body.getLinearVelocity().x;
-		float vspeed = body.getLinearVelocity().y;
-
-		float result = 0;
-		
-		//Vector2 moti = new Vector2(impulse).mul(maxHspeed - Math.abs(hspeed));
-		//Vector2 fm = new Vector2(impulse).mul(sideMoveStrength);
-		if (impulse.len2() > 0f) {
-			//pFriction = 0f;
-			
-			if (Math.abs(hspeed + impulse.x * sideMoveStrength) < maxHspeed) {
-				result += sideMoveStrength;
-			}
-			else if(impulse.x != 0f)
-				result += (maxHspeed - Math.abs(hspeed));
-			
-		} else {
-			// float pFriction = 4f;
-		}
-		
-		
-		float out = hspeed + impulse.x * result;
-		if(out > 0) 
-			out = MU.clamp(out - pFriction, 0, out);
-		else
-			out = MU.clamp(out + pFriction, out, 0);
-		body.setLinearVelocity(new Vector2(out, vspeed));
-	
-	}
 
 	protected void respawn() {
 		body.setTransform(new Vector2(20, 60), 0);
@@ -219,8 +160,6 @@ public class PlatformerEntityNode extends BoxNode {
 			System.out.println("DERP");
 		}
 		
-		handleInput(delta);
-
 		touchFloor = touchesFloor();
 		if (!touchFloor) {
 			// in the air
@@ -246,4 +185,56 @@ public class PlatformerEntityNode extends BoxNode {
 		}
 	}
 
+	public void jump() {
+		// TODO: apply vertical momentum if
+		// certain conditions are met
+		// - on ground or in water OR multi-jump available
+		float delta = Gdx.graphics.getDeltaTime();
+		jumped = true;
+
+		if (jumpTimeLeft > 0) {
+			jumpTimeLeft -= delta;
+			Vector2 pos = body.getPosition();
+			float vi = MU.lerp(jumpEndStrength, jumpStartStrength, jumpTimeLeft
+					/ jumpTimeTotal);
+
+			body.applyLinearImpulse(new Vector2(0, vi), body.getLocalCenter());
+
+			// Resources.play("Powerup21");
+
+		}
+	}
+
+	public void move(Vector2 impulse) {
+
+		//Vector2 center = new Vector2(body.getLocalCenter());
+		float hspeed = body.getLinearVelocity().x;
+		float vspeed = body.getLinearVelocity().y;
+
+		float result = 0;
+		
+		//Vector2 moti = new Vector2(impulse).mul(maxHspeed - Math.abs(hspeed));
+		//Vector2 fm = new Vector2(impulse).mul(sideMoveStrength);
+		if (impulse.len2() > 0f) {
+			//pFriction = 0f;
+			
+			if (Math.abs(hspeed + impulse.x * sideMoveStrength) < maxHspeed) {
+				result += sideMoveStrength;
+			}
+			else if(impulse.x != 0f)
+				result += (maxHspeed - Math.abs(hspeed));
+			
+		} else {
+			// float pFriction = 4f;
+		}
+		
+		
+		float out = hspeed + impulse.x * result;
+		if(out > 0) 
+			out = MU.clamp(out - pFriction, 0, out);
+		else
+			out = MU.clamp(out + pFriction, out, 0);
+		body.setLinearVelocity(new Vector2(out, vspeed));
+	
+	}
 }

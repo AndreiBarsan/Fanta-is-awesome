@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.siegedog.hava.engine.FancyGame;
 import com.siegedog.hava.engine.GameCam2D;
 import com.siegedog.hava.engine.GameInput;
+import com.siegedog.hava.engine.KeyboardInputNode;
 import com.siegedog.hava.engine.Node;
 import com.siegedog.hava.engine.RenderNode2D;
 import com.siegedog.hava.engine.Resources;
@@ -104,7 +105,7 @@ public class GameplayScreen implements Screen {
   // for(float cx = 7; cx < 30; cx+=2)
    //root.addNode(new Crate(cx, 14, 30, 50));
   
-  dude1 = new Unit("DERPY");
+  dude1 = new Unit("DERPY", new KeyboardInputNode());
 
   cam.follow(dude1.getPhysics(), true);
 
