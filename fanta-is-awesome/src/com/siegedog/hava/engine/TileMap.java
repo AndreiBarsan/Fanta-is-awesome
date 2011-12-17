@@ -21,6 +21,8 @@ import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Logger;
+import com.siegedog.hava.derpygame.GameplayScreen;
+import com.siegedog.hava.derpygame.LRR;
 
 /*
  * Loads and handles a basic tilemap.
@@ -31,6 +33,10 @@ public class TileMap {
 	TiledMap map;
 	TileAtlas atlas;
 	FileHandle packFileDirectory;
+	
+
+	int[] layersList = new int[] { 0, 1 };
+	int collisionLayer = 1;
 
 	float pixelsPerMeter;
 
@@ -42,25 +48,27 @@ public class TileMap {
 		return map.height;
 	}
 
-	public TileMap(String assetName, float pixelsPerMeter) {
+	
+	// GameplayScreen ref needed for player init and object generation etc.
+	public TileMap(String assetName, float pixelsPerMeter, GameplayScreen scr) {
 		this.pixelsPerMeter = pixelsPerMeter;
-		this.load(assetName);
+		this.load(assetName, scr);
 	}
 
-	protected void load(String assetName) {
+	protected void load(String assetName, GameplayScreen scr) {
 		int i;
 		long startTime, endTime;
-		
+
 		// the root is mapped to the ASSETS folder on ANDROID !!!
 		// TODO: look up how to map project data to assets folder
 		FileHandle kek = Gdx.files.internal("data/tiledmap/");
 		final String path = "data/tiledmap/";
-		
+
 		FileHandle yay = kek.child("level.tmx");
-		if(yay == null) {
+		if (yay == null) {
 			System.out.println("LEVEL 404");
 		}
-		
+
 		FileHandle mapHandle = Gdx.files.internal(path + assetName + ".tmx");
 		FileHandle baseDir = Gdx.files.internal(path);
 
@@ -71,8 +79,8 @@ public class TileMap {
 
 		atlas = new TileAtlas(map, baseDir);
 
-		int blockWidth = 32;
-		int blockHeight = 32;
+		int blockWidth = 16;
+		int blockHeight = 16;
 
 		startTime = System.currentTimeMillis();
 		tileMapRenderer = new TileMapRenderer(map, atlas, 16, 16);
@@ -81,29 +89,35 @@ public class TileMap {
 
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
-				// TODO: initialize player & shit
+				
 				System.out.println("Object " + object.name + " x,y = "
 						+ object.x + "," + object.y + " width,height = "
 						+ object.width + "," + object.height);
+				
+				if(object.name.equals("playerSpawn")) {
+					LRR lrr = new LRR(object.x, map.height * blockHeight - object.y , scr.getPlayerInputNode());
+					scr.initPlayer(lrr);					
+				}
+				
 			}
 		}
 
 		float aspectRatio = (float) Gdx.graphics.getWidth()
 				/ (float) Gdx.graphics.getHeight();
 	}
-
-	int[] layersList = new int[] { 0 };
+	
 	public void render(OrthographicCamera cam) {
-		Matrix4 m =  new Matrix4(cam.combined);
-		//m.scale(pixelsPerMeter, pixelsPerMeter, pixelsPerMeter);
+		Matrix4 m = new Matrix4(cam.combined);
+		// m.scale(pixelsPerMeter, pixelsPerMeter, pixelsPerMeter);
 		tileMapRenderer.getProjectionMatrix().set(m);
-		
+
 		Vector3 tmp = new Vector3();
 		tmp.set(0, 0, 0);
 		cam.unproject(tmp);
 
 		tileMapRenderer.render((int) tmp.x, (int) tmp.y,
-				Gdx.graphics.getWidth() * cam.zoom, Gdx.graphics.getHeight() * cam.zoom, layersList);
+				Gdx.graphics.getWidth() * cam.zoom, Gdx.graphics.getHeight()
+						* cam.zoom, layersList);
 	}
 
 	/**
@@ -148,6 +162,8 @@ public class TileMap {
 
 		for (int n = 0; n < lines.length; n++) {
 			String cols[] = lines[n].split(" ");
+			if(cols[0].length() < 2) continue;
+			
 			int tileNo = Integer.parseInt(cols[0]);
 
 			ArrayList<LineSegment> tmp = new ArrayList<LineSegment>();
@@ -170,8 +186,11 @@ public class TileMap {
 
 		for (int y = 0; y < map.height; y++) {
 			for (int x = 0; x < map.width; x++) {
-				int tileType = map.layers.get(0).tiles[map.height - 1 - y][x];
+				int tileType = map.layers.get(collisionLayer).tiles[map.height - 1 - y][x];
 
+			//	if(tileType!=0) System.out.println(tileType);
+			//	 if(4==0x4) continue;
+				
 				for (int n = 0; n < tileCollisionJoints.get(
 						Integer.valueOf(tileType)).size(); n++) {
 
@@ -198,7 +217,7 @@ public class TileMap {
 
 			environmentShape.set(lineSegment.start().mul(1 / pixelsPerMeter),
 					lineSegment.end().mul(1 / pixelsPerMeter));
-			
+
 			Fixture f = groundBody.createFixture(environmentShape, 0);
 			// f.setFriction(1f);
 			environmentShape.dispose();

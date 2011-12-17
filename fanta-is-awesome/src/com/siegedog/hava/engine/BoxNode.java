@@ -33,7 +33,7 @@ public class BoxNode extends Node {
 		if(bDef == null) {
 			bDef = new BodyDef();
 			bDef.type = BodyType.DynamicBody;
-			bDef.position.set(0, 0);
+			bDef.position.set(3, 3);
 			bDef.linearDamping = 0f;
 			bDef.fixedRotation = true;
 		}
@@ -53,27 +53,25 @@ public class BoxNode extends Node {
 		this.bDef = bDef;
 		this.fDef = fDef;
 		body = world.createBody(bDef);
+		
 		bodyFixture = body.createFixture(fDef);
 		
 	}
 
-	@Override
-	protected Object handleMsg(Message message) {
-			return null;
-	}
-	
 	public Body getBody() {
 		return body;
 	}
 	
 	@Override
 	public void update(float delta) {
-		// TODO Auto-generated method stub
 		super.update(delta);
 	}
 	
-	protected void setPosition(float x, float y) {
+	protected final void setPosition(float x, float y) {
+		System.out.println(body.getPosition());
+		System.out.println("MOVING BODY TO " + x + ", " + y);
 		body.setTransform(x, y, 0);
+		System.out.println(body.getPosition());
 	}
 	
 	protected void setDimensions(float w, float h) {
@@ -84,7 +82,7 @@ public class BoxNode extends Node {
 		Sprite s = ren.getSprite();
 		Vector2 v = body.getPosition();
 
-		s.setPosition(v.x * PIXELS_PER_METER - s.getWidth() / 2, v.y * PIXELS_PER_METER - s.getHeight() / 2);
+		s.setPosition(v.x * PIXELS_PER_METER - ren.getOffset().x, v.y * PIXELS_PER_METER - ren.getOffset().y);
 		return this;
 	}
 

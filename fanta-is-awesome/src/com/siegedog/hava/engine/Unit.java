@@ -6,26 +6,24 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Unit extends Node {
 
-	PlatformerEntityNode physics;
-	RenderNode2D renderNode;
-	InputNode inputNode;
+	protected PlatformerEntityNode physics;
+	protected RenderNode2D renderNode;
+	protected InputNode inputNode;
 
-	protected void handleInput() {
+	protected void handleInput(float delta) {
 		physics.move(inputNode.getMovement());
 
 		if (inputNode.getJump())
-			physics.jump();
+			physics.jump(delta);
 	}
 	
-	public Unit(String name, InputNode _inputNode) {
+	public Unit(String name, float x, float y, InputNode _inputNode, RenderNode2D _renderNode) {
 		super(name);
 		addNode(inputNode = _inputNode);
-		addNode(physics = new PlatformerEntityNode(80, 30, 10, 10));
-
-		// TODO: sprite from resource manager
-		Sprite sprite = new Sprite(
-				new Texture("data/img/sprites/attractor.png"));
-		addNode(renderNode = new RenderNode2D(sprite));
+		
+		physics = new PlatformerEntityNode(x / PIXELS_PER_METER, y / PIXELS_PER_METER, 10, 10);
+		addNode(physics);
+		addNode(renderNode = _renderNode);
 	}
 
 	public PlatformerEntityNode getPhysics() 
@@ -38,7 +36,7 @@ public class Unit extends Node {
 	public void update(float delta) {
 		// Tell the render node to put the sprite where it's supposed
 		// to be based on the physics.
-		handleInput();
+		handleInput(delta);
 		physics.syncSprite(renderNode);
 		super.update(delta);
 	}

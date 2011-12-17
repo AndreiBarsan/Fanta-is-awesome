@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 public class RenderNode2D extends Node {
 
@@ -57,16 +59,45 @@ public class RenderNode2D extends Node {
 
 	public void play(String name) {
 		if (animations.containsKey(name)) {
-			time = 0f;
-			activeAnimation = animations.get(name);
+			
+			if(activeAnimation != animations.get(name)) {
+				time = 0f;
+				activeAnimation = animations.get(name);
+			}
 		}
+	}
+	
+	public void stop() {
+		activeAnimation = null;
+	}
+	
+	public boolean flipped = false; 
+	public void flip(boolean flip) {
+		if(flip && !flipped) {
+			flipped = true;
+		//	sprite.flip(true, false);
+		}
+		
+		if(!flip && flipped){
+			flipped = false;
+			//sprite.flip(true, false);
+		}
+	}
+	
+	Vector2 offset = new Vector2(0, 0);
+	public void setOffset(float x, float y) {
+		offset.set(x, y);
+	}
+	public Vector2 getOffset() {
+		return offset;
 	}
 
 	@Override
 	public void update(float delta) {
 		time += delta;
 		if (activeAnimation != null) {
-			TextureRegion tr = activeAnimation.getKeyFrame(time, true);
+			TextureRegion tr = new TextureRegion(activeAnimation.getKeyFrame(time, true));
+			if(flipped) tr.flip(true, false);
 			sprite.setRegion(tr);
 		}
 	}

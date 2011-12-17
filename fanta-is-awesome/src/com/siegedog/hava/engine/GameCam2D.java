@@ -26,6 +26,8 @@ public class GameCam2D {
 
 	OrthographicCamera gameCam;
 	OrthographicCamera UICam;
+	
+	boolean useDynamicZoom = false;
 
 	Vector3 targetPosition;
 	float panStep = 25f;
@@ -41,7 +43,9 @@ public class GameCam2D {
 	public GameCam2D(int width, int height) {
 		gameCam = new OrthographicCamera(width, height);
 		UICam = new OrthographicCamera(width, height);
+		
 		UICam.zoom = 1f;
+		gameCam.zoom = 1f;
 
 		this.width = width;
 		this.height = height;
@@ -125,7 +129,7 @@ public class GameCam2D {
 	
 	// TODO: implement
 	public OrthographicCamera getUICam() {
-		UICam.position.set(gameCam.position);
+		//UICam.position.set(gameCam.position);
 		UICam.update();
 		return UICam;
 	}
@@ -147,13 +151,15 @@ public class GameCam2D {
 	public void update(float delta) {
 
 		// Update zoom
-		if (Math.abs(gameCam.zoom - targetZoom) < zoomStep)
-			gameCam.zoom = targetZoom;
-		else {
-			if (gameCam.zoom < targetZoom)
-				gameCam.zoom += zoomStep;
-			else if (gameCam.zoom > targetZoom)
-				gameCam.zoom -= zoomStep;
+		if(useDynamicZoom) {
+			if (Math.abs(gameCam.zoom - targetZoom) < zoomStep)
+				gameCam.zoom = targetZoom;
+			else {
+				if (gameCam.zoom < targetZoom)
+					gameCam.zoom += zoomStep;
+				else if (gameCam.zoom > targetZoom)
+					gameCam.zoom -= zoomStep;
+			}
 		}
 
 		// Update position

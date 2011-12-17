@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.siegedog.hava.engine.FancyGame;
 import com.siegedog.hava.engine.GameCam2D;
 import com.siegedog.hava.engine.GameInput;
+import com.siegedog.hava.engine.InputNode;
 import com.siegedog.hava.engine.KeyboardInputNode;
 import com.siegedog.hava.engine.Node;
 import com.siegedog.hava.engine.RenderNode2D;
@@ -34,198 +35,197 @@ import com.siegedog.hava.engine.Unit;
 
 public class GameplayScreen implements Screen {
 
- public final int PIXELS_PER_METER = 32;
+	public final int PIXELS_PER_METER = 32;
 
- private static final int[] layersList = { 2, 3 };
+	private static final int[] layersList = { 2, 3 };
 
- FancyGame game;
- SpriteBatch spriteBatch;
- BitmapFont font;
+	FancyGame game;
+	SpriteBatch spriteBatch;
+	BitmapFont font;
 
- Stage stage;
- Sprite TS;
+	Stage stage;
+	Sprite TS;
 
- GameCam2D cam;
- OrthographicCamera UICam;
+	GameCam2D cam;
+	OrthographicCamera UICam;
 
- GameInput gameInput;
+	GameInput gameInput;
 
- Node root = new Node("root");
- Unit dude1;
- Unit dude2;
+	Node root = new Node("root");
+	Unit dude1;
 
- long startTime = System.nanoTime();
- Vector3 tmp = new Vector3();
+	long startTime = System.nanoTime();
+	Vector3 tmp = new Vector3();
 
- TileMap map;
- float gravityStrength = 98f;
+	TileMap map;
+	float gravityStrength = 80f;
+	
+	
 
- World world;
- Box2DDebugRenderer boxDebugRenderer;
+	World world;
+	Box2DDebugRenderer boxDebugRenderer;
+	
+	public void initPlayer(Unit player) {
+		dude1 = player;
+		cam.follow(player.getPhysics(), false);
+		root.addNode(player);
+	}
 
- public GameplayScreen(FancyGame game) {
-  this.game = game;
+	public GameplayScreen(FancyGame game) {
+		this.game = game;
 
-  GameplayScreen.instance = this;
+		GameplayScreen.instance = this;
 
-  font = new BitmapFont();
-  font.setColor(new Color(0.5f, 0.5f, 0.8f, 0.94f));
-  cam = new GameCam2D(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-  UICam = new OrthographicCamera();
+		font = new BitmapFont();
+		font.setColor(new Color(0.5f, 0.5f, 0.8f, 0.94f));
+		cam = new GameCam2D(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		UICam = new OrthographicCamera();
 
-  spriteBatch = new SpriteBatch();
+		spriteBatch = new SpriteBatch();
 
-  // World setup
-  world = new World(new Vector2(0, -gravityStrength), true);
+		// World setup
+		world = new World(new Vector2(0, -gravityStrength), true);
 
-  map = new TileMap("level", PIXELS_PER_METER);
-  map.loadCollisions("data/tiledmap/collisions.txt", world);
-  boxDebugRenderer = new Box2DDebugRenderer(true, true, true);
+		map = new TileMap("level", PIXELS_PER_METER, this);
+		map.loadCollisions("data/tiledmap/collisions.txt", world);
+		boxDebugRenderer = new Box2DDebugRenderer(true, true, true);
 
-  // So far, just a thingy to let us drag the world around
-  gameInput = new GameInput(game, this);
-  Gdx.input.setInputProcessor(gameInput);
-  
-  RenderNode2D aniTest = new RenderNode2D("data/img/sprites/swarmer.png", 64, 64);
-  aniTest.addAnimationByFrameCount("idle", 5, 0.1f);
-  aniTest.play("idle");
-  aniTest.getSprite().setPosition(80 * PIXELS_PER_METER, 28 * PIXELS_PER_METER);
-  root.addNode(aniTest);
+		// So far, just a thingy to let us drag the world around
+		//gameInput = new GameInput(game, this);
+		//Gdx.input.setInputProcessor(gameInput);
 
-  //BasicSaveData save = new SaveGameHelper<BasicSaveData>().readSaveData("save.sav");
-  //System.out.println("Loaded game...");
-  //System.out.println(save.name);
-  
-  Resources.loadSfx("data/sound/sfx/");
+		/*
+		RenderNode2D aniTest = new RenderNode2D("data/img/sprites/swarmer.png",
+				64, 64);
+		aniTest.addAnimationByFrameCount("idle", 5, 0.1f);
+		aniTest.play("idle");
+		aniTest.getSprite().setPosition(80 * PIXELS_PER_METER,
+				28 * PIXELS_PER_METER);
+		root.addNode(aniTest);
+		 */
+		
+		// BasicSaveData save = new
+		// SaveGameHelper<BasicSaveData>().readSaveData("save.sav");
+		// System.out.println("Loaded game...");
+		// System.out.println(save.name);
 
-  // Dude setup
-  TS = new Sprite(new Texture("data/img/sprites/attractor.png"));
-  // dude = new Dude(sprite, this);
+		Resources.loadSfx("data/sound/sfx/");
 
-  // for(float cx = 7; cx < 30; cx+=2)
-   //root.addNode(new Crate(cx, 14, 30, 50));
-  
-  dude1 = new Unit("DERPY", new KeyboardInputNode());
+	}
 
-  cam.follow(dude1.getPhysics(), true);
+	@Override
+	public void render(float delta) { // called at 60fps
+		Gdx.gl.glClearColor(0.1f, 0.1f, 0.3f, 1f);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-  // dude1.attack(dude2);
-  // dude2.attack(dude1);
-  // dude1.attack(dude2);
-  // dude1.attack(dude2);
-  root.addNode(dude1);// .addNode(dude2);
+		// Async loading
+		Resources.update(delta);
 
-  // Stage setup
-  // stage = new Stage(map.getWidth(), map.getHeight(), false);
-  // stage.setCamera(cam);
-  // stage.addActor(dude);
+		// Do the physics
+		world.step(delta, 8, 3);
 
- }
+		// And then the logic
+		root.update(delta);
+		// stage.act(delta);
 
- @Override
- public void render(float delta) { // called at 60fps
-  Gdx.gl.glClearColor(0.1f, 0.1f, 0.3f, 1f);
-  Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		// Cam should always be updated.
+		// It's not expensive and prevents a bunch of bugs.
+		cam.update(delta);
 
-  // Async loading
-  Resources.update(delta);
+		// And render everything (if we can)
+		renderGame(delta);
+	}
 
-  // Do the physics
-  world.step(delta, 8, 3);
+	private void renderGame(float delta) {
+		// Start rendering shit. map first.
+		map.render(cam.getGameCam());
 
-  // And then the logic
-  root.update(delta);
-  // stage.act(delta);
+		spriteBatch.setProjectionMatrix(cam.getGameCam().combined);
+		spriteBatch.begin();
 
-  // Cam should always be updated.
-  // It's not expensive and prevents a bunch of bugs.
-  cam.update(delta);
+		// TS.draw(spriteBatch);
+		// stage.draw();
+		Node.renderAllNodes(spriteBatch);
+		spriteBatch.end();
 
-  // And render everything (if we can)
-  renderGame(delta);
- }
+		if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
+			Matrix4 m = new Matrix4(cam.getGameCam().combined);
+			m.scale(PIXELS_PER_METER, PIXELS_PER_METER, PIXELS_PER_METER);
+			boxDebugRenderer.render(world, m);
+		}
 
- private void renderGame(float delta) {
-  // Start rendering shit. map first.
-  map.render(cam.getGameCam());
+		float w = Gdx.graphics.getWidth();
+		float h = Gdx.graphics.getHeight();
+		spriteBatch.setProjectionMatrix(cam.getUICam().combined);
+		spriteBatch.begin();
+		font.draw(
+				spriteBatch,
+				"FPS: " + Gdx.graphics.getFramesPerSecond() + " World: "
+						+ world.getBodyCount() + " bodies." + "\n"
+						+ dude1.getBoxDebug(), cam.getUICam().position.x - w
+						/ 2 + 40, cam.getUICam().position.y - h / 2 + 40);
 
-  spriteBatch.setProjectionMatrix(cam.getGameCam().combined);
-  spriteBatch.begin();
+		tmp.set(0, 0, 0);
+		cam.getGameCam().unproject(tmp);
+		font.draw(spriteBatch, "DUDE location: " + dude1.getPhysics().getBody().getPosition(), 20, 80);
+		spriteBatch.end();
+	}
 
-  // TS.draw(spriteBatch);
-  // stage.draw();
-  Node.renderAllNodes(spriteBatch);
-  spriteBatch.end();
+	@Override
+	public void resize(int width, int height) {
+		cam.resize(width, height);
 
-  if (Gdx.app.getType() == Application.ApplicationType.Desktop) {
-   Matrix4 m = new Matrix4(cam.getGameCam().combined);
-   m.scale(PIXELS_PER_METER, PIXELS_PER_METER, PIXELS_PER_METER);
-   boxDebugRenderer.render(world, m);
-  }
+	}
 
-  float w = Gdx.graphics.getWidth();
-  float h = Gdx.graphics.getHeight();
-  spriteBatch.setProjectionMatrix(cam.getUICam().combined);
-  spriteBatch.begin();
-  font.draw(
-    spriteBatch,
-    "FPS: " + Gdx.graphics.getFramesPerSecond() + " World: "
-      + world.getBodyCount() + " bodies." + "\n"
-      + dude1.getBoxDebug(), cam.getUICam().position.x - w
-      / 2 + 40, cam.getUICam().position.y - h / 2 + 40);
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
 
-  tmp.set(0, 0, 0);
-  cam.getGameCam().unproject(tmp);
-  font.draw(spriteBatch, "Location: " + tmp.x + "," + tmp.y, 20, 80);
-  spriteBatch.end();
- }
+	}
 
- @Override
- public void resize(int width, int height) {
-  cam.resize(width, height);
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
 
- }
+	}
 
- @Override
- public void show() {
-  // TODO Auto-generated method stub
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
 
- }
+	}
 
- @Override
- public void hide() {
-  // TODO Auto-generated method stub
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
 
- }
+	}
 
- @Override
- public void pause() {
-  // TODO Auto-generated method stub
+	@Override
+	public void dispose() {
+		instance = null;
+	}
 
- }
+	public GameCam2D getCam() {
+		return cam;
+	}
 
- @Override
- public void resume() {
-  // TODO Auto-generated method stub
+	public World getWorld() {
+		return world;
+	}
+	
+	public InputNode getPlayerInputNode() {
+		// pff hack lol
+		return new KeyboardInputNode();
+	}
+	
+	public Node getRoot() {
+		return root;
+	}
 
- }
+	private static GameplayScreen instance;
 
- @Override
- public void dispose() {
-  instance = null;
- }
-
- public GameCam2D getCam() {
-  return cam;
- }
-
- public World getWorld() {
-  return world;
- }
-
- private static GameplayScreen instance;
-
- public static GameplayScreen get() {
-  return instance;
- }
+	public static GameplayScreen get() {
+		return instance;
+	}
 }

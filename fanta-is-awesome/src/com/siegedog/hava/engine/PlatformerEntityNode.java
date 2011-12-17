@@ -26,39 +26,44 @@ public class PlatformerEntityNode extends BoxNode {
 
 	boolean jumped = false;
 
-	float jumpEndStrength = 30f;
-
-	float jumpStartStrength = 100f;
+	float jumpEndStrength = 20f;
+	float jumpStartStrength = 80f;
+	
 	protected float jumpTimeLeft = 0f;
-
-	protected float jumpTimeTotal = 0.080f;
-	private float lastGroundTime = System.nanoTime();
+	protected float jumpTimeTotal = 0.081f;
+	
+	// private float lastGroundTime = System.nanoTime();
 
 	ContactListener listener;
 
-	protected float maxHspeed = 20f;
+	protected float maxHspeed = 10f;
 	int numFootContacts = 0;
 
-	float pFriction = 0.5f;
+	float pFriction = 2f;
 	protected float sideMoveStrength = 3f;
-	boolean touchFloor;
-
+	
+	protected boolean touchFloor;
 	protected boolean touchWall;
+	
+	protected Vector2 pendingPos;
 
 	float w, h;
-
+	
+	Vector2 track;
+	
 	public PlatformerEntityNode(float x, float y, float w, float h) {
 		super(null, null);
 		
-		AIInputNode tmpINode = new AIInputNode();
-		tmpINode.setAI(new LulzyAINode());
+		//AIInputNode tmpINode = new AIInputNode();
+		//tmpINode.setAI(new LulzyAINode());
 		
-		addNode(inputNode = tmpINode);
+		//addNode(inputNode = tmpINode);
 		setPosition(x, y);
+		track = body.getPosition();
 		setDimensions(w, h);
 		body.setLinearDamping(0f);
 		bodyFixture.setFriction(0f);
-		body.setGravityScale(1.2f);
+		body.setGravityScale(1.0f);
 		this.w = w;
 		this.h = h;
 
@@ -111,6 +116,7 @@ public class PlatformerEntityNode extends BoxNode {
 
 
 	protected void respawn() {
+		System.out.println("respawing" + parent.name);
 		body.setTransform(new Vector2(20, 60), 0);
 		body.setLinearVelocity(0.0f, 0.0f);
 	}
@@ -174,7 +180,7 @@ public class PlatformerEntityNode extends BoxNode {
 		}
 		jumped = false;
 		
-		if (body.getPosition().y < 0) {
+		if (body.getPosition().y < -10) {
 			respawn();
 		}
 
@@ -183,13 +189,12 @@ public class PlatformerEntityNode extends BoxNode {
 		if (Gdx.input.isKeyPressed(Keys.SPACE)) {
 			respawn();
 		}
+		
+		
+		super.update(delta);
 	}
 
-	public void jump() {
-		// TODO: apply vertical momentum if
-		// certain conditions are met
-		// - on ground or in water OR multi-jump available
-		float delta = Gdx.graphics.getDeltaTime();
+	public void jump(float delta) {
 		jumped = true;
 
 		if (jumpTimeLeft > 0) {
