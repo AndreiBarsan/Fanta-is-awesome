@@ -200,7 +200,7 @@ public class TileMap {
 					lineSegment.end().mul(1 / pixelsPerMeter));
 			
 			Fixture f = groundBody.createFixture(environmentShape, 0);
-			f.setFriction(1f);
+			// f.setFriction(1f);
 			environmentShape.dispose();
 		}
 
