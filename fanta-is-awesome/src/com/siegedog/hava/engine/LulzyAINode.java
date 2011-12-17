@@ -11,9 +11,7 @@ public class LulzyAINode extends Node implements IAIController
 	// public methods
 	
 	public Vector2 calculateMovement()
-	{
-<<<<<<< HEAD
-		Vector2 res;
+	{	Vector2 res;
 		
 		if(System.currentTimeMillis() % 2 == 0)
 		{
@@ -25,27 +23,15 @@ public class LulzyAINode extends Node implements IAIController
 		}
 		
 		return res;
-=======
-		return null;
->>>>>>> 50c7e7d65e247d477738efd6372156e2d1101dfc
 	}
 	
 	public boolean calculateJump()
 	{
-<<<<<<< HEAD
 		return System.currentTimeMillis() % 2 == 0;
-=======
-		return true;
->>>>>>> 50c7e7d65e247d477738efd6372156e2d1101dfc
-	}
-	
+	}	
 	public boolean calculateAttack()
 	{
-<<<<<<< HEAD
 		return false;
-=======
-		return true;
->>>>>>> 50c7e7d65e247d477738efd6372156e2d1101dfc
 	}
 		
 	public LulzyAINode()
