@@ -2,9 +2,19 @@ package com.siegedog.hava.engine;
 
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class AIInputNode extends InputNode 
+public class AIInputNode extends InputNode 
 {
 	IAIController ai;
+	
+	public IAIController getAI()
+	{
+		return ai;
+	}
+	
+	public void setAI(IAIController value)
+	{
+		ai = value;
+	}
 	
 	@Override
 	public Vector2 getMovement()
