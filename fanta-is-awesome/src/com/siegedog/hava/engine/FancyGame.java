@@ -5,8 +5,10 @@ import java.util.Stack;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Interpolator;
 
-public class FancyGame implements ApplicationListener{
+public class FancyGame implements ApplicationListener {
 
 	private Stack<Screen> screens = new Stack<Screen>();
 	protected float delta;
@@ -17,8 +19,7 @@ public class FancyGame implements ApplicationListener{
 	
 	public void popScreen() {
 		screens.pop();
-	}
-	
+	}	
 	
 	@Override
 	public void create() {
