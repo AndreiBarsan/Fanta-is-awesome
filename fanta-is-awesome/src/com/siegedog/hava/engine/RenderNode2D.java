@@ -41,14 +41,14 @@ public class RenderNode2D extends Node {
 	}
 	
 	// most animations are just subsequent texture coords of the current one
-	public void addAnimationByFrameCount(String name, int frames) {
+	public void addAnimationByFrameCount(String name, int frames, float frameTime) {
 		ArrayList<TextureRegion> keyFrames = new ArrayList<TextureRegion>();
 		
 		for(int i = 0; i<frames; i++) {
 			keyFrames.add(new TextureRegion(texture, i * w, 0, w, h));
 		}
 		
-		animations.put(name, new Animation(0.1f, keyFrames));
+		animations.put(name, new Animation(frameTime, keyFrames));
 	}
 
 	public void addAnimation(String name, Animation animation) {
@@ -69,8 +69,6 @@ public class RenderNode2D extends Node {
 			TextureRegion tr = activeAnimation.getKeyFrame(time, true);
 			sprite.setRegion(tr);
 		}
-
-		
 	}
 
 	public Sprite getSprite() {
