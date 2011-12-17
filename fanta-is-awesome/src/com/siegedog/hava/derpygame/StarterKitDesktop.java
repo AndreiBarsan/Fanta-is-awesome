@@ -1,7 +1,3 @@
-/*******************************************************************************
-QUWIEGsdif hfdiuhv 
- ******************************************************************************/
-
 package com.siegedog.hava.derpygame;
 
 import com.badlogic.gdx.backends.jogl.JoglApplication;
@@ -13,6 +9,3 @@ public class StarterKitDesktop
 		new JoglApplication(new StarterKit(), "DERP", 640, 480, false);		
 	}
 }
-
-
-// WHAT IF..? dunno
