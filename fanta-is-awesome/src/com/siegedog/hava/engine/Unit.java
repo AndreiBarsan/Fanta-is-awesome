@@ -17,11 +17,11 @@ public class Unit extends Node {
 			physics.jump(delta);
 	}
 	
-	public Unit(String name, float x, float y, InputNode _inputNode, RenderNode2D _renderNode) {
+	public Unit(String name, float x, float y, float w, float h, InputNode _inputNode, RenderNode2D _renderNode) {
 		super(name);
 		addNode(inputNode = _inputNode);
 		
-		physics = new PlatformerEntityNode(x / PIXELS_PER_METER, y / PIXELS_PER_METER, 10, 10);
+		physics = new PlatformerEntityNode(x / PIXELS_PER_METER, y / PIXELS_PER_METER, w, h);
 		addNode(physics);
 		addNode(renderNode = _renderNode);
 	}

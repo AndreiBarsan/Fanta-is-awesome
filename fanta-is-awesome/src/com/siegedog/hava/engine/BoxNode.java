@@ -45,21 +45,32 @@ public class BoxNode extends Node {
 			polyShape.setAsBox(32 / (2 * PIXELS_PER_METER), 32 / (2 * PIXELS_PER_METER));
 			
 			fDef.shape = polyShape;
-			fDef.density = 100f;
+			fDef.density = 1f;
 			fDef.friction = 0.3f;
 			fDef.restitution = 0f;
 		}
 		
-		this.bDef = bDef;
-		this.fDef = fDef;
-		body = world.createBody(bDef);
+		setBody(bDef, fDef);
+	}
+	
+	public void setBody(BodyDef _bDef, FixtureDef _fDef) {
+		bDef = _bDef;
+		fDef = _fDef;
 		
-		bodyFixture = body.createFixture(fDef);
-		bodyFixture.setUserData(this);
+		body = world.createBody(_bDef);
+		bodyFixture = body.createFixture(_fDef);
 	}
 
 	public Body getBody() {
 		return body;
+	}
+	
+	public BodyDef getBDef() {
+		return bDef;
+	}
+	
+	public FixtureDef getFDef() {
+		return fDef;
 	}
 	
 	@Override

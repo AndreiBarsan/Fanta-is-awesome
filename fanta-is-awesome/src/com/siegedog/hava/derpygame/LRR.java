@@ -2,10 +2,10 @@ package com.siegedog.hava.derpygame;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.siegedog.hava.derpygame.*;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.siegedog.hava.engine.InputNode;
-import com.siegedog.hava.engine.Node;
 import com.siegedog.hava.engine.RenderNode2D;
 import com.siegedog.hava.engine.Unit;
 
@@ -16,12 +16,14 @@ public class LRR extends Unit {
 	ArrayList<PickupNode> powerups = new ArrayList<PickupNode>();
 	
 	public LRR(float x, float y, InputNode _inputNode) {
-		super("Little Red Riding Hewd", x, y, _inputNode, new RenderNode2D(
+		super("Little Red Riding Hewd", x, y, 12, 32, _inputNode, new RenderNode2D(
 				"data/img/sprites/lrrsm.png", 34, 64));
 		
-		//setBody();
+		
+		//physics.setBody(rrb, rrf);
+		
 
-		renderNode.setOffset(20f, 16f);
+		renderNode.setOffset(16f, 26f);
 		renderNode.addAnimationByFrameCount("basic", 8, 0.05f);
 		renderNode.play("basic");
 	}

@@ -26,8 +26,8 @@ public class PlatformerEntityNode extends BoxNode {
 
 	boolean jumped = false;
 
-	float jumpEndStrength = 20f;
-	float jumpStartStrength = 80f;
+	float jumpEndStrength = 0.2f;
+	float jumpStartStrength = 2.2f;
 	
 	protected float jumpTimeLeft = 0f;
 	protected float jumpTimeTotal = 0.1f;
@@ -46,6 +46,7 @@ public class PlatformerEntityNode extends BoxNode {
 	protected boolean touchWall;
 	
 	protected Vector2 pendingPos;
+	private Vector2 originalPos;
 
 	float w, h;
 	
@@ -53,11 +54,9 @@ public class PlatformerEntityNode extends BoxNode {
 	
 	public PlatformerEntityNode(float x, float y, float w, float h) {
 		super(null, null);
-		
-		//AIInputNode tmpINode = new AIInputNode();
-		//tmpINode.setAI(new LulzyAINode());
-		//addNode(inputNode = tmpINode);
+
 		setPosition(x, y);
+		originalPos = new Vector2(x, y);
 		track = body.getPosition();
 		setDimensions(w, h);
 		body.setLinearDamping(0f);
@@ -68,7 +67,7 @@ public class PlatformerEntityNode extends BoxNode {
 
 		fDef.isSensor = true;
 		polyShape.setAsBox(w / (2 * PIXELS_PER_METER) - 0.03f, 0.1f,
-				new Vector2(0f, -0.15f), 0f);
+				new Vector2(0f, - h / (2 * PIXELS_PER_METER) + 0.001f), 0f);
 		footSensor = body.createFixture(fDef);
 
 		world.setContactListener(listener = new ContactListener() {
@@ -115,8 +114,8 @@ public class PlatformerEntityNode extends BoxNode {
 
 
 	protected void respawn() {
-		System.out.println("respawing" + parent.name);
-		body.setTransform(new Vector2(20, 60), 0);
+		System.out.println("respawing " + parent.name);
+		body.setTransform(originalPos, 0);
 		body.setLinearVelocity(0.0f, 0.0f);
 	}
 
