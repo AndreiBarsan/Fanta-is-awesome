@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.siegedog.hava.engine.AIInputNode;
 import com.siegedog.hava.engine.FancyGame;
 import com.siegedog.hava.engine.GameCam2D;
 import com.siegedog.hava.engine.GameInput;
@@ -83,6 +84,11 @@ public class GameplayScreen implements Screen {
 		boxDebugRenderer = new Box2DDebugRenderer(true, true, true);
 		root.addNode(new UberJumpNode(15,40,3,3));
 		root.addNode(new UberSpeedNode(17,43,3,3));
+		
+		RetardedAI retAI = new RetardedAI();
+		AIInputNode pedoInput = new AIInputNode((LRR)dude1, retAI);
+		PedoBear pedo = new PedoBear(17*PIXELS_PER_METER,44*PIXELS_PER_METER, pedoInput);
+		root.addNode(pedo);
 
 		// So far, just a thingy to let us drag the world around
 		//gameInput = new GameInput(game, this);

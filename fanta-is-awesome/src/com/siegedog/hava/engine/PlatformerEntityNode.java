@@ -26,7 +26,7 @@ public class PlatformerEntityNode extends BoxNode {
 	
 	// private float lastGroundTime = System.nanoTime();
 
-	ContactListener listener;
+	static ContactListener listener = null;
 
 	protected float maxHspeed = 10f;
 	int numFootContacts = 0;
@@ -64,31 +64,34 @@ public class PlatformerEntityNode extends BoxNode {
 				new Vector2(0f, - h / (2 * PIXELS_PER_METER) + 0.001f), 0f);
 		footSensor = body.createFixture(fDef);
 
-		world.setContactListener(listener = new ContactListener() {
+		if(listener == null)
+		{
+			world.setContactListener(listener = new ContactListener() {
 
-			@Override
-			public void beginContact(Contact contact) {
-				if (contact.getFixtureA() == footSensor
-						|| contact.getFixtureB() == footSensor)
-					numFootContacts++;
-			}
+				@Override
+				public void beginContact(Contact contact) {
+					if (contact.getFixtureA() == footSensor
+							|| contact.getFixtureB() == footSensor)
+						numFootContacts++;
+				}
 
-			@Override
-			public void endContact(Contact contact) {
-				if (contact.getFixtureA() == footSensor
-						|| contact.getFixtureB() == footSensor)
-					numFootContacts--;
-			}
+				@Override
+				public void endContact(Contact contact) {
+					if (contact.getFixtureA() == footSensor
+							|| contact.getFixtureB() == footSensor)
+						numFootContacts--;
+				}
 
-			@Override
-			public void postSolve(Contact contact, ContactImpulse impulse) {
+				@Override
+				public void postSolve(Contact contact, ContactImpulse impulse) {
 
-			}
+				}
 
-			@Override
-			public void preSolve(Contact contact, Manifold oldManifold) {
-			}
-		});
+				@Override
+				public void preSolve(Contact contact, Manifold oldManifold) {
+				}
+			});
+		}
 
 	}
 

@@ -10,7 +10,7 @@ public class PedoBear extends Unit
 	boolean left;
 	
 	public PedoBear(float x, float y, InputNode _inputNode) {
-		super("PEDOBEAR", x, y, 12, 32, _inputNode, new RenderNode2D(
+		super("PEDOBEAR", x, y, 32, 32, _inputNode, new RenderNode2D(
 				"data/img/sprites/penis.png", 32, 32));
 		renderNode.setOffset(16f, 26f);
 	}

@@ -1,11 +1,12 @@
 package com.siegedog.hava.engine;
 
 import com.badlogic.gdx.math.Vector2;
+import com.siegedog.hava.derpygame.LRR;
 
 public class AIInputNode extends InputNode 
 {
 	IAIController ai;
-	Unit ctrlUnit;
+	LRR player;
 	
 	
 	public IAIController getAI()
@@ -17,35 +18,34 @@ public class AIInputNode extends InputNode
 	{
 		ai = value;
 	}
+
 	
 	@Override
 	public Vector2 getMovement()
 	{
-		return new Vector2();
-		//return ai.calculateMovement();
+		return ai.calculateMovement((Unit)parent, (Unit)player);
 	}
 	
 	@Override
 	public boolean getJump()
 	{
-		return false;
-		//return ai.calculateJump();
+		return ai.calculateJump((Unit)parent, (Unit)player);
 	}
 	
 	@Override
 	public boolean getAttack()
 	{
-		return false;
-		//return ai.calculateAttack();
+		return ai.calculateAttack((Unit)parent, (Unit)player);
 	}
 	
-	public AIInputNode()
+	public AIInputNode(LRR _player)
 	{
-		
+		player = _player;
 	}
 	
-	public AIInputNode(IAIController ctrl)
+	public AIInputNode(LRR _player, IAIController ctrl)
 	{
+		player = _player;
 		ai = ctrl;
 	}
 }

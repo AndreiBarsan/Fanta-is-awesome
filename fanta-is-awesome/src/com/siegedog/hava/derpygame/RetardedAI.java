@@ -12,7 +12,13 @@ public class RetardedAI implements IAIController
 	{
 		Vector2 result = new Vector2(0,0);
 		
-		player.getPhysics().getBody().getPosition();
+		float move = player.getPhysics().getBody().getPosition().x - target.getPhysics().getBody().getPosition().x;
+		if(move != 0)
+		{
+			move /= Math.abs(move);
+		}
+		
+		result.x = move;
 		
 		return result;
 	}
