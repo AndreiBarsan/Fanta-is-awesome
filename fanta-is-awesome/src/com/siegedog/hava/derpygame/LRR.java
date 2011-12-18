@@ -8,6 +8,9 @@ import com.siegedog.hava.engine.Unit;
 
 public class LRR extends Unit {
 
+	boolean oldLeft = false;
+	boolean left;
+	
 	public LRR(float x, float y, InputNode _inputNode) {
 		super("Little Red Riding Hewd", x, y, _inputNode, new RenderNode2D(
 				"data/img/sprites/lrrsm.png", 34, 64));
@@ -16,9 +19,7 @@ public class LRR extends Unit {
 		renderNode.addAnimationByFrameCount("basic", 8, 0.05f);
 		renderNode.play("basic");
 	}
-
-	boolean oldLeft = false;
-	boolean left;
+	
 	@Override
 	public void update(float delta) {
 		
@@ -35,4 +36,8 @@ public class LRR extends Unit {
 		super.update(delta);
 	}
 
+	public void applyPickup(PickupNode target)
+	{
+		System.out.println("Found pickup");
+	}
 }
