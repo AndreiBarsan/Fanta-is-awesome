@@ -15,7 +15,6 @@ public class PickupNode extends BoxNode
 {
 	// fields
 	
-	BoxNode box;
 	ContactListener listener;
 	
 	// public methods
