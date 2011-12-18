@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Node {
 	protected ArrayList<Node> children = new ArrayList<Node>();
-	protected Node parent;
+	protected Node parent = null;
 
 	// LinkedList<Message> messages = new LinkedList<Message>();
 	protected static final ArrayList<RenderNode2D> renderNodes = new ArrayList<RenderNode2D>();
@@ -40,6 +40,11 @@ public class Node {
 		return name;
 	}
 
+	public Node getParent()
+	{
+		return parent;
+	}
+	
 	/*
 	protected final Node qc(Class c) {
 		for (Node node : children)

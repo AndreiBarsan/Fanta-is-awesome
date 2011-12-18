@@ -1,5 +1,7 @@
 package com.siegedog.hava.derpygame;
 
+import java.util.List;
+
 import com.siegedog.hava.engine.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -7,62 +9,81 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.MassData;
 
 public class PickupNode extends BoxNode 
 {
 	// fields
 	
+	BoxNode box;
 	ContactListener listener;
+	
+	// public methods
+	
+	@Override
+	public void update(float delta)
+	{
+		if (world.getContactCount() == 0)
+		{
+			System.out.println("no contacts");
+			return;
+		}
+
+		List<Contact> contacts = world.getContactList();
+		for (Contact c : contacts) 
+		{
+			BoxNode o1 = (BoxNode)c.getFixtureA().getUserData();
+			BoxNode o2 = (BoxNode)c.getFixtureB().getUserData();
+
+			LRR player = null;
+			PickupNode pickup = null;
+			if(o1.getParent() != null && o1.getParent() instanceof LRR)
+			{
+				player = (LRR)o1.getParent();
+			}
+			if(o2.getParent() != null && o2.getParent() instanceof LRR)
+			{
+				player = (LRR)o2.getParent();
+			}
+			if(o1 instanceof PickupNode)
+			{
+				pickup = (PickupNode)o1;
+				
+			}
+			if(o2 instanceof PickupNode)
+			{
+				pickup = (PickupNode)o2;
+				
+			}
+			
+			
+			if(player != null)
+			{
+				System.out.println("player found");
+			}
+			if(pickup != null)
+			{
+				System.out.println("pickup found");
+			}
+			
+			if(player != null && pickup != null)
+			{
+				//player.applyPickup(pickup);
+			}
+		}
+
+	}
 	
 	
 	// ctors
 
 	public PickupNode(String name, int posX, int posY, int sizeX, int sizeY)
-	{
+	{	
 		super(null, null);
+		
 		setPosition(posX, posY);
 		setDimensions(sizeX, sizeY);
 
-		world.setContactListener(listener = new ContactListener() {
-
-			@Override
-			public void beginContact(Contact contact) {
-				Object o1 = contact.getFixtureA().getUserData();
-				Object o2 = contact.getFixtureB().getUserData();
-
-				LRR player = null;
-				PickupNode pickup = null;
-				if(o1 instanceof LRR && o2 instanceof PickupNode )
-				{
-					player = (LRR)o1;
-					pickup = (PickupNode)o2;
-				}
-				else
-				{
-					if(o2 instanceof LRR && o1 instanceof PickupNode)
-					{
-						player = (LRR)o2;
-						pickup = (PickupNode)o1;
-					}
-				}
-				
-				if(player != null && pickup != null)
-				{
-					player.applyPickup(pickup);
-				}
-			}
-
-			@Override
-			public void endContact(Contact contact) {
-			}
-
-			@Override
-			public void postSolve(Contact contact, ContactImpulse impulse) {
-			}
-
-			@Override
-			public void preSolve(Contact contact, Manifold oldManifold) {
-			}
-		});
+		this.body.setGravityScale(0);
 	}
 }
