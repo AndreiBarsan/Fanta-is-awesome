@@ -35,7 +35,7 @@ public class TileMap {
 	FileHandle packFileDirectory;
 	
 
-	int[] layersList = new int[] { 0, 1, 2 };
+	int[] layersList = new int[] { 1, 2 };
 	int collisionLayer = 0;
 
 	float pixelsPerMeter;
