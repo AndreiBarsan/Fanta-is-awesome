@@ -66,7 +66,9 @@ public class MenuScreen implements Screen {
 		layout.add(aboutText);
 		aboutText.x = 100f;
 		aboutText.y = 100f;
+		
 		aboutText.setWrap(true);
+		aboutText.layout();
 		aboutText.pack();
 		aboutText.visible = false;
 		
