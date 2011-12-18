@@ -6,6 +6,6 @@ import com.siegedog.hava.engine.Unit;
 public class StarterKitDesktop 
 {
 	public static void main (String[] argv) {
-		new JoglApplication(new StarterKit(), "DERP", 640, 480, false);		
+		new JoglApplication(new StarterKit(), "DERP", 1024, 768, false);		
 	}
 }

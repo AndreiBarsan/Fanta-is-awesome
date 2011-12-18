@@ -30,7 +30,7 @@ public class PlatformerEntityNode extends BoxNode {
 	float jumpStartStrength = 80f;
 	
 	protected float jumpTimeLeft = 0f;
-	protected float jumpTimeTotal = 0.081f;
+	protected float jumpTimeTotal = 0.1f;
 	
 	// private float lastGroundTime = System.nanoTime();
 
@@ -63,7 +63,7 @@ public class PlatformerEntityNode extends BoxNode {
 		setDimensions(w, h);
 		body.setLinearDamping(0f);
 		bodyFixture.setFriction(0f);
-		body.setGravityScale(1.0f);
+		body.setGravityScale(0.8f);
 		this.w = w;
 		this.h = h;
 
