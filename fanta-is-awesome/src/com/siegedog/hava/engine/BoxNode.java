@@ -80,10 +80,10 @@ public class BoxNode extends Node {
 	}
 	
 	protected final void setPosition(float x, float y) {
-		System.out.println(body.getPosition());
-		System.out.println("MOVING BODY TO " + x + ", " + y);
+		//System.out.println(body.getPosition());
+		//System.out.println("MOVING BODY TO " + x + ", " + y);
 		body.setTransform(x, y, 0);
-		System.out.println(body.getPosition());
+		//System.out.println(body.getPosition());
 	}
 	
 	protected void setDimensions(float w, float h) {
