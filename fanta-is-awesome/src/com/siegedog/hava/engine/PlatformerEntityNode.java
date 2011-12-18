@@ -56,7 +56,6 @@ public class PlatformerEntityNode extends BoxNode {
 		
 		//AIInputNode tmpINode = new AIInputNode();
 		//tmpINode.setAI(new LulzyAINode());
-		
 		//addNode(inputNode = tmpINode);
 		setPosition(x, y);
 		track = body.getPosition();

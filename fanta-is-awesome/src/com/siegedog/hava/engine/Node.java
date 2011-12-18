@@ -97,30 +97,11 @@ public class Node {
 	
 	public void dispose() // WOOOOOOOOOOOOOOOOOOOT
 	{
-		if(parent != null)
-		{
-			try
-			{
-				parent.wait();
-			}
-			catch (Exception e)
-			{
-				return;
-			}
-			parent.removeNode(this);
-		}
+		
+		parent.removeNode(this);
 		if(this instanceof RenderNode2D)
-		{
-			try
-			{
-				renderNodes.wait();
-			}
-			catch (Exception e)
-			{
-				return;
-			}
-			renderNodes.remove(this);
-			
+		{			
+			renderNodes.remove(this);	
 		}
 	}
 	
