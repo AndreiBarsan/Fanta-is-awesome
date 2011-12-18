@@ -1,6 +1,7 @@
 package com.siegedog.hava.engine;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -24,6 +25,8 @@ public class GameCam2D {
 	float targetZoom = 1f;
 	float zoomStep = 0.01f;
 
+	Vector2 maxPos;
+	
 	OrthographicCamera gameCam;
 	OrthographicCamera UICam;
 	
@@ -40,9 +43,11 @@ public class GameCam2D {
 
 	Interpolator interpolator;
 
-	public GameCam2D(int width, int height) {
+	public GameCam2D(int width, int height, Vector2 maxPos) {
 		gameCam = new OrthographicCamera(width, height);
 		UICam = new OrthographicCamera(width, height);
+		
+		this.maxPos = maxPos; 
 		
 		UICam.zoom = 1f;
 		gameCam.zoom = 0.5f;
@@ -183,6 +188,15 @@ public class GameCam2D {
 			Vector3 pan = new Vector3(diff.nor().mul( /*(dist/ 30f) **/ realStep ));
 			gameCam.position.add(pan);
 		}
+		
+		Vector2 cPos = new Vector2(gameCam.position.x, gameCam.position.y);
+		Vector2 min = new Vector2(0f, 0f);
+		Vector2 max = new Vector2(maxPos);
+		min.add(width /2 * gameCam.zoom, height /2 * gameCam.zoom);
+		max.sub(width /2 * gameCam.zoom, height /2 *gameCam.zoom);
+		
+		MU.clamp(cPos, min, max);
+		gameCam.position.set(cPos.x, cPos.y, gameCam.position.z);
 
 		gameCam.update();
 		UICam.update();

@@ -70,6 +70,7 @@ public class RenderNode2D extends Node {
 		activeAnimation = null;
 	}
 	
+	
 	public boolean flipped = false; 
 	public void flip(boolean flip) {
 		if(flip && !flipped) {
