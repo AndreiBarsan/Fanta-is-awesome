@@ -20,7 +20,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Logger;
 import com.siegedog.hava.derpygame.GameplayScreen;
 import com.siegedog.hava.derpygame.LRR;
 
@@ -35,7 +34,7 @@ public class TileMap {
 	FileHandle packFileDirectory;
 	
 
-	int[] layersList = new int[] { 1, 2 };
+	int[] layersList = new int[] { 1, 2, 3, 4, 5 };
 	int collisionLayer = 0;
 
 	float pixelsPerMeter;
@@ -188,7 +187,7 @@ public class TileMap {
 			for (int x = 0; x < map.width; x++) {
 				int tileType = map.layers.get(collisionLayer).tiles[map.height - 1 - y][x];
 
-//				if(tileType!=0) System.out.println(tileType);
+	//			if(tileType!=0) System.out.println(tileType);
 //				 if(4==0x4) continue;
 				
 				for (int n = 0; n < tileCollisionJoints.get(

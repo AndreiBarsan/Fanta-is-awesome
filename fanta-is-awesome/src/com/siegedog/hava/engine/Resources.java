@@ -1,7 +1,5 @@
 package com.siegedog.hava.engine;
 
-import java.util.HashMap;
-
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;

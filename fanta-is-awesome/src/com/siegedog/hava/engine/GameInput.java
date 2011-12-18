@@ -1,13 +1,7 @@
 package com.siegedog.hava.engine;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Interpolator;
 import com.siegedog.hava.derpygame.GameplayScreen;
 
 public class GameInput extends InputAdapter implements InputProcessor {

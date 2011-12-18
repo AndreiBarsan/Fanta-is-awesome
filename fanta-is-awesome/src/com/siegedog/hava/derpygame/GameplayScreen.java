@@ -1,20 +1,14 @@
 package com.siegedog.hava.derpygame;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -27,9 +21,7 @@ import com.siegedog.hava.engine.GameInput;
 import com.siegedog.hava.engine.InputNode;
 import com.siegedog.hava.engine.KeyboardInputNode;
 import com.siegedog.hava.engine.Node;
-import com.siegedog.hava.engine.RenderNode2D;
 import com.siegedog.hava.engine.Resources;
-import com.siegedog.hava.engine.SaveGameHelper;
 import com.siegedog.hava.engine.TileMap;
 import com.siegedog.hava.engine.Unit;
 

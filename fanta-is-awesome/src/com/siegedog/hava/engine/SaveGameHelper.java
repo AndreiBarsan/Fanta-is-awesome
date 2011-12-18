@@ -1,16 +1,8 @@
 package com.siegedog.hava.engine;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Writer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter;
-import com.badlogic.gdx.utils.Json.Serializable;
-import com.badlogic.gdx.utils.Json.Serializer;
-import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.siegedog.hava.derpygame.BasicSaveData;
 
 public class SaveGameHelper<T> {

@@ -2,14 +2,9 @@ package com.siegedog.hava.derpygame;
 
 import java.util.List;
 
-import com.siegedog.hava.engine.*;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.MassData;
+import com.siegedog.hava.engine.BoxNode;
+import com.siegedog.hava.engine.RenderNode2D;
 
 public class PickupNode extends BoxNode 
 {

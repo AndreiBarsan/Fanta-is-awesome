@@ -5,8 +5,6 @@ import java.util.Stack;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Interpolator;
 
 public class FancyGame implements ApplicationListener {
 

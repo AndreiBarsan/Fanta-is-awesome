@@ -1,7 +1,5 @@
 package com.siegedog.hava.engine;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 
 // Provides an uniform, code-based output to any object

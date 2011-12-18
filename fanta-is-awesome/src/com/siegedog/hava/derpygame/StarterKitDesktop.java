@@ -1,7 +1,6 @@
 package com.siegedog.hava.derpygame;
 
 import com.badlogic.gdx.backends.jogl.JoglApplication;
-import com.siegedog.hava.engine.Unit;
 
 public class StarterKitDesktop 
 {

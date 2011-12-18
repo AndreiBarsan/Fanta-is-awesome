@@ -2,9 +2,6 @@ package com.siegedog.hava.derpygame;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.siegedog.hava.engine.InputNode;
 import com.siegedog.hava.engine.RenderNode2D;
 import com.siegedog.hava.engine.Unit;

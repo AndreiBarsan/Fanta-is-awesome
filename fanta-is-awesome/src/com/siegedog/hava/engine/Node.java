@@ -1,11 +1,6 @@
 package com.siegedog.hava.engine;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.Queue;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
