@@ -59,7 +59,6 @@ public class GameplayScreen implements Screen {
 	
 	public void initPlayer(Unit player) {
 		dude1 = player;
-		cam.follow(player.getPhysics(), false);
 		root.addNode(player);
 	}
 
@@ -70,8 +69,6 @@ public class GameplayScreen implements Screen {
 
 		font = new BitmapFont();
 		font.setColor(new Color(0.5f, 0.5f, 0.8f, 0.94f));
-		cam = new GameCam2D(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		UICam = new OrthographicCamera();
 
 		spriteBatch = new SpriteBatch();
 
@@ -81,6 +78,12 @@ public class GameplayScreen implements Screen {
 		map = new TileMap("level", PIXELS_PER_METER, this);
 		map.loadCollisions("data/tiledmap/collisions.txt", world);
 		boxDebugRenderer = new Box2DDebugRenderer(true, true, true);
+		
+		cam = 	new GameCam2D(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 
+				new Vector2(map.getWidth() * PIXELS_PER_METER, map.getHeight() * PIXELS_PER_METER));
+		
+		cam.follow(dude1.getPhysics(), false);
+		
 		root.addNode(new UberJumpNode(15,40,3,3));
 		root.addNode(new UberSpeedNode(17,43,3,3));
 

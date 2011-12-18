@@ -20,6 +20,7 @@ public class LRR extends Unit {
 	
 		renderNode.setOffset(16f, 26f);
 		renderNode.addAnimationByFrameCount("basic", 8, 0.05f);
+		renderNode.addAnimationByFrameCount("idle", 1, 0.1f);
 		renderNode.play("basic");
 	}
 	
@@ -34,7 +35,8 @@ public class LRR extends Unit {
 			renderNode.flip(true);
 			renderNode.play("basic");
 		} else
-			renderNode.stop();
+			renderNode.play("idle");
+			
 		
 		super.update(delta);
 	}
