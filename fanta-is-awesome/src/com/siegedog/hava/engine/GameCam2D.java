@@ -47,7 +47,9 @@ public class GameCam2D {
 		gameCam = new OrthographicCamera(width, height);
 		UICam = new OrthographicCamera(width, height);
 		
-		this.maxPos = maxPos; 
+		this.maxPos = maxPos;
+		maxPos.x /= 2;
+		maxPos.y /= 2;
 		
 		UICam.zoom = 1f;
 		gameCam.zoom = 0.5f;
