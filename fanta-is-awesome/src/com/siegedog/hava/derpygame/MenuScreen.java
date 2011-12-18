@@ -62,14 +62,13 @@ public class MenuScreen implements Screen {
 		layout.add(quit);
 		layout.row();
 		
-		final Label aboutText = new Label("Heya!\nWe are two awesome game developers who spent like half the contest time with pointless shit and made a 10%-working game that features penis images as placeholders.", skin.getStyle(LabelStyle.class), "about-box");
+		final Label aboutText = new Label("Heya! We are two awesome game developers who spent like half the contest time with pointless shit and made a 10%-working game that features penis images as placeholders.", skin.getStyle(LabelStyle.class), "about-box");
 		layout.add(aboutText);
 		aboutText.x = 100f;
 		aboutText.y = 100f;
 		
 		aboutText.setWrap(true);
-		aboutText.layout();
-		aboutText.pack();
+		// aboutText.pack();
 		aboutText.visible = false;
 		
 		about.setClickListener(new ClickListener() {
