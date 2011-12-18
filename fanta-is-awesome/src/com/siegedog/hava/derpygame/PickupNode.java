@@ -16,15 +16,17 @@ public class PickupNode extends BoxNode
 	// fields
 	
 	ContactListener listener;
+	RenderNode2D renderNode;
 	
 	// public methods
 	
 	@Override
 	public void update(float delta)
 	{
+		syncSprite(renderNode);
+		
 		if (world.getContactCount() == 0)
 		{
-			System.out.println("no contacts");
 			return;
 		}
 
@@ -69,11 +71,10 @@ public class PickupNode extends BoxNode
 				
 			}
 			
-
-			
 			if(player != null && pickup != null)
 			{
 				player.applyPickup(pickup);
+				dispose();
 			}
 		}
 
@@ -82,9 +83,10 @@ public class PickupNode extends BoxNode
 	
 	// ctors
 
-	public PickupNode(String name, int posX, int posY, int sizeX, int sizeY)
+	public PickupNode(String _name, int posX, int posY, int sizeX, int sizeY)
 	{	
 		super(null, null);
+		name = _name;
 		
 		setPosition(posX, posY);
 		setDimensions(sizeX, sizeY);

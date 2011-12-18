@@ -77,9 +77,50 @@ public class Node {
 		return this;
 	}
 
+	public boolean removeNode(Node node)
+	{
+		boolean res = children.remove(node);
+		
+		if(res)
+		{
+			node.parent = null;
+		}
+		
+		return res;
+	}
+	
 	public void update(float delta) {
 		for (Node node : children) {
 			node.update(delta);
+		}
+	}
+	
+	public void dispose() // WOOOOOOOOOOOOOOOOOOOT
+	{
+		if(parent != null)
+		{
+			try
+			{
+				parent.wait();
+			}
+			catch (Exception e)
+			{
+				return;
+			}
+			parent.removeNode(this);
+		}
+		if(this instanceof RenderNode2D)
+		{
+			try
+			{
+				renderNodes.wait();
+			}
+			catch (Exception e)
+			{
+				return;
+			}
+			renderNodes.remove(this);
+			
 		}
 	}
 	

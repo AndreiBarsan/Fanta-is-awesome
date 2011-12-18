@@ -96,14 +96,13 @@ public class GameplayScreen implements Screen {
 		//Gdx.input.setInputProcessor(gameInput);
 
 		/*
-		RenderNode2D aniTest = new RenderNode2D("data/img/sprites/swarmer.png",
-				64, 64);
-		aniTest.addAnimationByFrameCount("idle", 5, 0.1f);
-		aniTest.play("idle");
-		aniTest.getSprite().setPosition(80 * PIXELS_PER_METER,
-				28 * PIXELS_PER_METER);
-		root.addNode(aniTest);
-		 */
+		RenderNode2D aniTest = new RenderNode2D("data/img/sprites/penis.png",
+				32, 32);
+	
+		aniTest.getSprite().setPosition(15 * PIXELS_PER_METER,
+				40 * PIXELS_PER_METER);
+		root.addNode(aniTest);*/
+		 
 		
 		// BasicSaveData save = new
 		// SaveGameHelper<BasicSaveData>().readSaveData("save.sav");
