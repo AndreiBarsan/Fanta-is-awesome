@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="100" height="100" tilewidth="16" tileheight="16">
- <tileset firstgid="1" name="tileset01" tilewidth="16" tileheight="16">
-  <image source="../img/tileMaps/tileset01.png" width="320" height="256"/>
+ <tileset firstgid="1" name="COLLISION TILES" tilewidth="16" tileheight="16">
+  <image source="collisionMasks.png" width="16" height="16"/>
  </tileset>
- <layer name="Tile Layer 1" width="100" height="100">
+ <tileset firstgid="2" name="tiles" tilewidth="16" tileheight="16">
+  <image source="tiles.png" width="320" height="256"/>
+ </tileset>
+ <layer name="COLLISIONS" width="100" height="100" visible="0">
   <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T+1lC6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAbnEAAAQ==
+   eJzt2LEOhCAAREH9/5+2usri9G4TFphJbAnwIhiPI+sMj8d/9OiiRxc9uujRRY8uenTRo4seXfTIOIMPPfTookef3Zu0net6dGmbzxsrftO0zeeJ1r1MmXVds877mxnXteJZ9ZGc10r7MlJqT34ZR4+7ke+/Hl30uEv+o3R/AJDk/hnHvgEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALCrCzKDALw=
   </data>
  </layer>
- <layer name="Tile Layer 2" width="100" height="100">
+ <layer name="mainGround" width="100" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt0cEJgDAQRcF0YQ9qDWoNav+1GMFDbiISsugMvNseFn5KAAAAAAAAAEBEXcCglj43FI1t3/m9KTcXLTf3c6C+6Oke1GWPWNZkj2jOTbarvfEvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG8cvfUTFA==
+   eJzt2MENgkAQhlH6UWtw7EH7b0U4eDAEg2aZceG95Duz5AcODAMAAACwJ1F9AGZu1QfgjT3+z9E3OY2dV5Tl6HvEijL1vMf0bEfjqvW4RyRUqcdNJpFUth73iOQytdzjl2/6peH196LVJtfh+z16fD+3FoXZYy4Ks8dcjN2Lemx/ewB0bIv/Ta/4LBYCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAvXsCIbhIHw==
+  </data>
+ </layer>
+ <layer name="extraGround" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1jEOgCAMBdAunkG5/0V1cXKAaEQs7yV/bwotRAAAAADwpvJ1ATC42WdkPbJVMnuP+KeWu13L0r3qfM5zyNpL+xH6uLPTzeeVnozn6V8l8xsLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAxA5DNAYS
   </data>
  </layer>
  <objectgroup name="ACTORS" width="100" height="100">

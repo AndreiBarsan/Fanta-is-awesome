@@ -35,8 +35,8 @@ public class TileMap {
 	FileHandle packFileDirectory;
 	
 
-	int[] layersList = new int[] { 0, 1 };
-	int collisionLayer = 1;
+	int[] layersList = new int[] { 0, 1, 2 };
+	int collisionLayer = 0;
 
 	float pixelsPerMeter;
 
@@ -162,7 +162,7 @@ public class TileMap {
 
 		for (int n = 0; n < lines.length; n++) {
 			String cols[] = lines[n].split(" ");
-			if(cols[0].length() < 2) continue;
+			// if(cols[0].length() < 2) continue;
 			
 			int tileNo = Integer.parseInt(cols[0]);
 
@@ -188,8 +188,8 @@ public class TileMap {
 			for (int x = 0; x < map.width; x++) {
 				int tileType = map.layers.get(collisionLayer).tiles[map.height - 1 - y][x];
 
-			//	if(tileType!=0) System.out.println(tileType);
-			//	 if(4==0x4) continue;
+//				if(tileType!=0) System.out.println(tileType);
+//				 if(4==0x4) continue;
 				
 				for (int n = 0; n < tileCollisionJoints.get(
 						Integer.valueOf(tileType)).size(); n++) {
