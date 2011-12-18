@@ -89,7 +89,8 @@ public class GameplayScreen implements Screen {
 		map = new TileMap("level", PIXELS_PER_METER, this);
 		map.loadCollisions("data/tiledmap/collisions.txt", world);
 		boxDebugRenderer = new Box2DDebugRenderer(true, true, true);
-		root.addNode(new DoNothingPickup(15,40,3,3));
+		root.addNode(new UberJumpNode(15,40,3,3));
+		root.addNode(new UberSpeedNode(17,43,3,3));
 
 		// So far, just a thingy to let us drag the world around
 		//gameInput = new GameInput(game, this);

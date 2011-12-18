@@ -52,6 +52,8 @@ public class PlatformerEntityNode extends BoxNode {
 	
 	Vector2 track;
 	
+	// ctor
+	
 	public PlatformerEntityNode(float x, float y, float w, float h) {
 		super(null, null);
 
@@ -98,25 +100,35 @@ public class PlatformerEntityNode extends BoxNode {
 
 	}
 
+	// get & set
+	
+	public float getJumpTime()
+	{
+		return jumpTimeTotal;
+	}
+	
+	public void setJumpTime(float value)
+	{
+		jumpTimeTotal = value;
+	}
 
-	public float getMaxHspeed() {
+	public void setMaxHspeed(float value)
+	{
+		maxHspeed = value;
+	}
+	
+	public float getMaxHspeed()
+	{
 		return maxHspeed;
 	}
 	
-
+	
 	public String getUI() {
 		
 		return ((touchWall) ? "[tw]" : "")
 				+ ((numFootContacts == 0) ? " [in air]" : ("[ground "
 						+ numFootContacts + "]")) + "["
 				+ (bodyFixture.getFriction()) + "] " + (body.getLinearVelocity().x * 10 / 10);
-	}
-
-
-	protected void respawn() {
-		System.out.println("respawing " + parent.name);
-		body.setTransform(originalPos, 0);
-		body.setLinearVelocity(0.0f, 0.0f);
 	}
 
 	protected boolean touchesFloor() {
@@ -154,6 +166,15 @@ public class PlatformerEntityNode extends BoxNode {
 		}
 
 		return false;
+	}
+
+	
+	// public methods
+
+	protected void respawn() {
+		System.out.println("respawing " + parent.name);
+		body.setTransform(originalPos, 0);
+		body.setLinearVelocity(0.0f, 0.0f);
 	}
 
 	@Override

@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2;
 public class AIInputNode extends InputNode 
 {
 	IAIController ai;
+	Unit ctrlUnit;
+	
 	
 	public IAIController getAI()
 	{
@@ -19,19 +21,22 @@ public class AIInputNode extends InputNode
 	@Override
 	public Vector2 getMovement()
 	{
-		return ai.calculateMovement();
+		return new Vector2();
+		//return ai.calculateMovement();
 	}
 	
 	@Override
 	public boolean getJump()
 	{
-		return ai.calculateJump();
+		return false;
+		//return ai.calculateJump();
 	}
 	
 	@Override
 	public boolean getAttack()
 	{
-		return ai.calculateAttack();
+		return false;
+		//return ai.calculateAttack();
 	}
 	
 	public AIInputNode()

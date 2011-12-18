@@ -19,10 +19,8 @@ public class LRR extends Unit {
 		super("Little Red Riding Hewd", x, y, 12, 32, _inputNode, new RenderNode2D(
 				"data/img/sprites/lrrsm.png", 34, 64));
 		
-		
 		//physics.setBody(rrb, rrf);
-		
-
+	
 		renderNode.setOffset(16f, 26f);
 		renderNode.addAnimationByFrameCount("basic", 8, 0.05f);
 		renderNode.play("basic");
@@ -48,5 +46,6 @@ public class LRR extends Unit {
 	{
 		System.out.println("Found pickup: " + target.getName());
 		powerups.add(target);
+		target.applyTo(this);
 	}
 }

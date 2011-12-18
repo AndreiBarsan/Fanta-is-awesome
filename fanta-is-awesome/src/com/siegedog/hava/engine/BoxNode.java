@@ -59,6 +59,7 @@ public class BoxNode extends Node {
 		
 		body = world.createBody(_bDef);
 		bodyFixture = body.createFixture(_fDef);
+		bodyFixture.setUserData(this);
 	}
 
 	public Body getBody() {
