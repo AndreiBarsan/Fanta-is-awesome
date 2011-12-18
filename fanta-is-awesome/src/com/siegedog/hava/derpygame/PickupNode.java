@@ -15,7 +15,6 @@ public class PickupNode extends BoxNode
 {
 	// fields
 	
-	ContactListener listener;
 	RenderNode2D renderNode;
 	
 	// public methods
@@ -74,12 +73,19 @@ public class PickupNode extends BoxNode
 			if(player != null && pickup != null)
 			{
 				player.applyPickup(pickup);
-				dispose();
+				markDispose();
 			}
 		}
 
 	}
 	
+	
+	@Override
+	protected void dispose()
+	{
+		super.dispose();
+		renderNodes.remove(renderNode);
+	}
 	
 	// ctors
 

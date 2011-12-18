@@ -78,6 +78,13 @@ public class BoxNode extends Node {
 		((PolygonShape)bodyFixture.getShape()).setAsBox(w / ( 2 * PIXELS_PER_METER), h / ( 2 * PIXELS_PER_METER));
 	}
 
+	@Override
+	protected void dispose()
+	{
+		super.dispose();
+		world.destroyBody(body);
+	}
+	
 	public Node syncSprite(RenderNode2D ren) {
 		Sprite s = ren.getSprite();
 		Vector2 v = body.getPosition();
