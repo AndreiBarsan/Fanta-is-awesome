@@ -33,8 +33,22 @@ public class PickupNode extends BoxNode
 		for (Contact c : contacts) 
 		{
 			BoxNode o1 = (BoxNode)c.getFixtureA().getUserData();
+			if(o1 == null)
+				continue;
 			BoxNode o2 = (BoxNode)c.getFixtureB().getUserData();
+			if(o2 == null)
+				continue;
 
+			if(o1 == null)
+			{
+				System.out.println("o1 null");
+			}
+			
+			if(o2 == null)
+			{
+				System.out.println("o2 null");
+			}
+			
 			LRR player = null;
 			PickupNode pickup = null;
 			if(o1.getParent() != null && o1.getParent() instanceof LRR)
@@ -56,19 +70,11 @@ public class PickupNode extends BoxNode
 				
 			}
 			
-			
-			if(player != null)
-			{
-				System.out.println("player found");
-			}
-			if(pickup != null)
-			{
-				System.out.println("pickup found");
-			}
+
 			
 			if(player != null && pickup != null)
 			{
-				//player.applyPickup(pickup);
+				player.applyPickup(pickup);
 			}
 		}
 
