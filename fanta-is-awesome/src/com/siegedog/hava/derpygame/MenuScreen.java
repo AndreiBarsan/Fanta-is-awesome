@@ -10,9 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Align;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.ui.tablelayout.Table;
 import com.siegedog.hava.engine.FancyGame;
 
@@ -57,6 +60,23 @@ public class MenuScreen implements Screen {
 		
 		final Button quit = new TextButton("Quit game", skin.getStyle(TextButtonStyle.class), "button-quit");
 		layout.add(quit);
+		layout.row();
+		
+		final Label aboutText = new Label("Heya!\nWe are two awesome game developers who spent like half the contest time with pointless shit and made a 10%-working game that features penis images as placeholders.", skin.getStyle(LabelStyle.class), "about-box");
+		layout.add(aboutText);
+		aboutText.x = 100f;
+		aboutText.y = 100f;
+		aboutText.setWrap(true);
+		aboutText.pack();
+		aboutText.visible = false;
+		
+		about.setClickListener(new ClickListener() {
+			
+			@Override
+			public void click(Actor actor, float x, float y) {
+				aboutText.visible = true;			
+			}
+		});
 		
 		quit.setClickListener(new ClickListener() {
 			

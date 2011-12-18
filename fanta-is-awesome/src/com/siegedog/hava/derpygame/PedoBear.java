@@ -11,22 +11,24 @@ public class PedoBear extends Unit
 	
 	public PedoBear(float x, float y, InputNode _inputNode) {
 		super("PEDOBEAR", x, y, 32, 32, _inputNode, new RenderNode2D(
-				"data/img/sprites/penis.png", 32, 32));
-		renderNode.setOffset(16f, 26f);
+				"data/img/sprites/pedoBear.png", 128, 64));
+		renderNode.setOffset(64f, 16f);
+		renderNode.addAnimationByFrameCount("basic", 8, 0.1f);
+		renderNode.addAnimationByFrameCount("idle", 1, 0.1f);
 	}
 	
 	@Override
 	public void update(float delta) {
 		
-		/*float xs = physics.getBody().getLinearVelocity().x;
+		float xs = physics.getBody().getLinearVelocity().x;
 		if (xs > 0.1f) {
-			renderNode.flip(false);
-			renderNode.play("basic");
-		} else if (xs < -0.1f) {
 			renderNode.flip(true);
 			renderNode.play("basic");
+		} else if (xs < -0.1f) {
+			renderNode.flip(false);
+			renderNode.play("basic");
 		} else
-			renderNode.stop();*/
+			renderNode.play("idle");
 		
 		super.update(delta);
 	}
