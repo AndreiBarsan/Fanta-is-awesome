@@ -49,7 +49,7 @@ public class BoxNode extends Node {
 			fDef.friction = 0.3f;
 			fDef.restitution = 0f;
 		}
-		
+	
 		setBody(bDef, fDef);
 	}
 	
@@ -59,6 +59,7 @@ public class BoxNode extends Node {
 		
 		body = world.createBody(_bDef);
 		bodyFixture = body.createFixture(_fDef);
+		bodyFixture.setUserData(this);
 	}
 
 	public Body getBody() {
