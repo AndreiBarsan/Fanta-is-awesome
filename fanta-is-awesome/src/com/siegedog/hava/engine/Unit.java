@@ -10,27 +10,19 @@ public class Unit extends Node {
 	protected RenderNode2D renderNode;
 	protected InputNode inputNode;
 
+	// public methods
+	
 	protected void handleInput(float delta) {
 		physics.move(inputNode.getMovement());
 
 		if (inputNode.getJump())
 			physics.jump(delta);
 	}
-	
-	public Unit(String name, float x, float y, float w, float h, InputNode _inputNode, RenderNode2D _renderNode) {
-		super(name);
-		addNode(inputNode = _inputNode);
-		
-		physics = new PlatformerEntityNode(x / PIXELS_PER_METER, y / PIXELS_PER_METER, w, h);
-		addNode(physics);
-		addNode(renderNode = _renderNode);
-	}
 
 	public PlatformerEntityNode getPhysics() 
 	{
 		return physics;
 	}
-
 
 	@Override
 	public void update(float delta) {
@@ -43,5 +35,17 @@ public class Unit extends Node {
 
 	public String getBoxDebug(){
 		return physics.getUI();
+	}
+
+	// ctors
+	
+	public Unit(String name, float x, float y, float w, float h, InputNode _inputNode, RenderNode2D _renderNode) 
+	{
+		super(name);
+		addNode(inputNode = _inputNode);
+		
+		physics = new PlatformerEntityNode(x / PIXELS_PER_METER, y / PIXELS_PER_METER, w, h);
+		addNode(physics);
+		addNode(renderNode = _renderNode);
 	}
 }

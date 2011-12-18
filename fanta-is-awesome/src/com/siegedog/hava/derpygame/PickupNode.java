@@ -59,12 +59,12 @@ public class PickupNode extends BoxNode
 			{
 				player = (LRR)o2.getParent();
 			}
-			if(o1 instanceof PickupNode)
+			if(o1 == this)
 			{
 				pickup = (PickupNode)o1;
 				
 			}
-			if(o2 instanceof PickupNode)
+			if(o2 == this)
 			{
 				pickup = (PickupNode)o2;
 				
@@ -77,6 +77,16 @@ public class PickupNode extends BoxNode
 			}
 		}
 
+	}
+	
+	public void applyTo(LRR player)
+	{
+		
+	}
+	
+	public void removeFrom(LRR player)
+	{
+		
 	}
 	
 	// ctors
