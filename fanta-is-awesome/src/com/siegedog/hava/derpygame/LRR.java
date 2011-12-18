@@ -18,6 +18,8 @@ public class LRR extends Unit {
 	public LRR(float x, float y, InputNode _inputNode) {
 		super("Little Red Riding Hewd", x, y, _inputNode, new RenderNode2D(
 				"data/img/sprites/lrrsm.png", 34, 64));
+		
+		//setBody();
 
 		renderNode.setOffset(20f, 16f);
 		renderNode.addAnimationByFrameCount("basic", 8, 0.05f);
