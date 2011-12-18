@@ -22,7 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.Interpolator;
 public class PlatformerEntityNode extends BoxNode {
 
 	protected Fixture footSensor;
-	InputNode inputNode;
 
 	boolean jumped = false;
 
@@ -50,10 +49,6 @@ public class PlatformerEntityNode extends BoxNode {
 	public PlatformerEntityNode(float x, float y, float w, float h) {
 		super(null, null);
 		
-		AIInputNode tmpINode = new AIInputNode();
-		tmpINode.setAI(new LulzyAINode());
-		
-		addNode(inputNode = tmpINode);
 		setPosition(x, y);
 		setDimensions(w, h);
 		body.setLinearDamping(0f);
