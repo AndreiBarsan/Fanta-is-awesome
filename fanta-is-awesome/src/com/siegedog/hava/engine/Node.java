@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Node {
 	protected ArrayList<Node> children = new ArrayList<Node>();
+	protected ArrayList<Node> removeList = new ArrayList<Node>();
 	protected Node parent = null;
 
 	// LinkedList<Message> messages = new LinkedList<Message>();
@@ -90,19 +91,31 @@ public class Node {
 	}
 	
 	public void update(float delta) {
-		for (Node node : children) {
+		for (Node node : children) 
+		{
 			node.update(delta);
+		}
+		
+		for(Node node: removeList)
+		{
+			node.dispose();
+		}
+		
+		removeList.clear();
+	}
+		
+	public void markDispose()
+	{
+		if(parent != null)
+		{
+			parent.removeList.add(this);
 		}
 	}
 	
-	public void dispose() // WOOOOOOOOOOOOOOOOOOOT
+	protected void dispose()
 	{
-		
-		parent.removeNode(this);
-		if(this instanceof RenderNode2D)
-		{			
-			renderNodes.remove(this);	
-		}
+		for(int i = children.size() - 1; i>=0; i--)
+			children.get(i).dispose();
 	}
 	
 	public static void renderAllNodes(SpriteBatch sb) {

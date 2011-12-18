@@ -110,5 +110,11 @@ public class RenderNode2D extends Node {
 
 		sprite.draw(sb, alpha);
 	}
+	
+	@Override
+	protected void dispose() {
+		renderNodes.remove(this);
+		super.dispose();
+	}
 
 }
